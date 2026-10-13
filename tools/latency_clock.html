@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Latency Clock</title>
+<style>
+  html,body{margin:0;height:100%;background:#000;color:#0f0;
+    font-family:"Menlo",monospace;overflow:hidden}
+  #c{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    font-size:18vw;font-weight:700;letter-spacing:0.02em;
+    text-align:center;line-height:1.1}
+  #ms{color:#ff0}
+  #hint{position:absolute;bottom:3vh;width:100%;text-align:center;
+    color:#555;font-size:2.5vw}
+</style>
+</head>
+<body>
+  <div id="c"><span id="sec">00.</span><span id="ms">000</span></div>
+  <div id="hint">glass-to-glass latency clock &mdash; point the Pi camera here</div>
+<script>
+  // Show seconds-within-minute + milliseconds, big, from the SAME wall clock
+  // the capture script reads. Updated via rAF for minimal display lag.
+  const sec = document.getElementById('sec');
+  const ms  = document.getElementById('ms');
+  function tick(){
+    const t = Date.now();
+    const s = Math.floor(t/1000) % 60;
+    const m = t % 1000;
+    sec.textContent = String(s).padStart(2,'0') + '.';
+    ms.textContent  = String(m).padStart(3,'0');
+    requestAnimationFrame(tick);
+  }
+  tick();
+</script>
+</body>
+</html>

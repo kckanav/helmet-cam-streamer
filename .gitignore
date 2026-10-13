@@ -1,0 +1,6 @@
+# build artifacts / local
+*.log
+*.state
+*.nv12
+*.tar.gz
+.DS_Store

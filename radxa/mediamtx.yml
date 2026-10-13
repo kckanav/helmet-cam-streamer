@@ -1,0 +1,30 @@
+# MediaMTX config for the Radxa helmet-cam (LAN WebRTC + RTSP relay)
+logLevel: info
+logDestinations: [stdout]
+
+# turn off everything we don't use
+api: no
+metrics: no
+pprof: no
+playback: no
+rtmp: no
+hls: no
+srt: no
+
+# RTSP (for ffprobe / OpenCV / VLC on the LAN)
+rtsp: yes
+rtspTransports: [udp, tcp]
+rtspAddress: :8554
+
+# WebRTC (browser viewing, UDP, low latency)
+webrtc: yes
+webrtcAddress: :8889
+# dedicated local UDP port => single predictable port for ICE host candidates on the LAN
+webrtcLocalUDPAddress: :8189
+# ICE servers empty => LAN-only host candidates, no STUN/TURN round-trips
+webrtcICEServers2: []
+
+paths:
+  # the GStreamer pipeline publishes H.264 here via rtspclientsink
+  cam:
+    source: publisher

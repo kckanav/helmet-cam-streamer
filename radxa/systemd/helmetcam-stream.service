@@ -1,0 +1,14 @@
+[Unit]
+Description=Helmet-cam capture + HW H.264 encode -> MediaMTX
+After=mediamtx.service rkaiq_3A.service
+Wants=mediamtx.service
+
+[Service]
+ExecStart=/usr/local/bin/helmetcam-stream.sh
+Restart=always
+RestartSec=3
+# camera/rkaiq settle margin on cold boot
+ExecStartPre=/bin/sleep 2
+
+[Install]
+WantedBy=multi-user.target
